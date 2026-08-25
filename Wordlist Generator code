@@ -1,0 +1,48 @@
+# Wordlist Generator
+
+name = input("Enter name: ").strip()
+birthdate = input("Enter birthdate: ").strip()
+pet = input("Enter pet name: ").strip()
+
+# Basic variations
+names = {
+    name,
+    name.lower(),
+    name.upper(),
+    name.capitalize()
+}
+
+pets = {
+    pet,
+    pet.lower(),
+    pet.upper(),
+    pet.capitalize()
+}
+
+# Generate combinations
+passwords = set()
+
+for n in names:
+    passwords.add(n)
+    passwords.add(n + birthdate)
+    passwords.add(n + "123")
+    passwords.add(n + "1234")
+
+for p in pets:
+    passwords.add(p)
+    passwords.add(p + birthdate)
+    passwords.add(p + "123")
+    passwords.add(p + "1234")
+
+for n in names:
+    for p in pets:
+        passwords.add(n + p)
+        passwords.add(n + "@" + p)
+
+# Save to file
+with open("wordlist.txt", "w") as file:
+    for password in sorted(passwords):
+        file.write(password + "\n")
+
+print(f"\nGenerated {len(passwords)} unique entries.")
+print("Saved to wordlist.txt")
